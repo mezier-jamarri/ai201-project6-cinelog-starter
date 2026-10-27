@@ -1,7 +1,11 @@
 # PR Response Doc — CineLog Watchlist Feature
 
 ## AI Usage
-<!-- Fill in at the end — how you used AI tools during this project -->
+During this project, I used AI tools primarily for codebase orientation, Git troubleshooting, and format verification:
+
+1. **Understanding Codebase Patterns:** Before writing the deduplication logic for the watchlist, I provided the existing `add_to_collection` function to the AI and asked it to break down how the duplicate checking and exception handling worked. This ensured I accurately replicated the project's established pattern for my new endpoint.
+2. **Rebase Conflict Resolution:** When rebasing on `origin/main`, I encountered merge conflicts due to the upstream shift from integers to UUIDs. I used the AI as a sounding board to help identify the conflicting lines in `models.py` and verify the proper SQLAlchemy syntax for defining the new UUID columns.
+3. **Commit History Verification:** Before finalizing my PR, I provided my `git log --oneline` output to the AI to verify that my rewritten commit messages strictly followed the conventional commit format (feat, fix, docs) and that no merge commits remained in the tree.
 
 ## Comment 1 — Rename
 **What I did:** Renamed `save_to_watchlist` to `add_to_watchlist` in `services/watchlist_service.py` to match the project's naming convention. Updated the corresponding call site in `routes/watchlist/watchlist.py`.
@@ -38,3 +42,6 @@
 2. Send a POST request to `/watchlist/<demo_user_id>/add` with a JSON payload `{"film_id": "<uuid>"}`.
 3. Attempt to send the exact same POST request again to verify it returns an `AlreadyInWatchlistError`.
 4. Send a GET request to `/watchlist/<demo_user_id>` and verify the added film appears at the top of the list.
+
+## Git Log Screenshot
+![Git Log](Screenshot 2026-10-27 at 2.32.27 AM.jpg)
