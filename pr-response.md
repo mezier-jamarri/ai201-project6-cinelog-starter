@@ -44,4 +44,6 @@ During this project, I used AI tools primarily for codebase orientation, Git tro
 4. Send a GET request to `/watchlist/<demo_user_id>` and verify the added film appears at the top of the list.
 
 ## Git Log Screenshot
-![Git Log](Screenshot 2026-10-27 at 2.32.27 AM.jpg)
+![Git Log](git-log.png)
+
+
