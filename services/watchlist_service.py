@@ -8,7 +8,6 @@ from app import db
 from models import Film, WatchlistEntry
 from services.collection_service import FilmNotFoundError
 
-
 class AlreadyInWatchlistError(Exception):
     """Raised when a film is already in the user's watchlist."""
     pass
@@ -19,7 +18,7 @@ def add_to_watchlist(user_id, film_id):
 
     Args:
         user_id (str): UUID of the user.
-        film_id (int): UUID of the film.
+        film_id (str): UUID of the film.
 
     Returns:
         WatchlistEntry: The newly created entry.

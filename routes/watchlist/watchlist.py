@@ -11,13 +11,6 @@ from services.collection_service import FilmNotFoundError
 watchlist_bp = Blueprint("watchlist", __name__)
 
 
-@watchlist_bp.route("/<user_id>", methods=["GET"])
-def view_watchlist(user_id):
-    """GET /watchlist/<user_id> — Return the user's watchlist."""
-    films = get_watchlist(user_id)
-    return jsonify(films)
-
-
 @watchlist_bp.route("/<user_id>/add", methods=["POST"])
 def add_film(user_id):
     """
@@ -31,3 +24,5 @@ def add_film(user_id):
 
     entry = add_to_watchlist(user_id=user_id, film_id=data["film_id"])
     return jsonify(entry.to_dict()), 201
+
+
