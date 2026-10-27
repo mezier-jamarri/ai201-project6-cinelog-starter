@@ -24,10 +24,17 @@
 **My position:** I agree with the maintainer and changed the default sort order to "date added" descending.
 **Reasoning:** When users check their watchlist, they are usually looking for the movie they just decided they wanted to watch. Showing the most recently added films at the top aligns better with immediate user intent.
 **Engagement with reviewer's point:** The reviewer correctly pointed out that "recent additions" are the primary use case. While alphabetical sorting is good for scanning a massive library, watchlists are typically shorter, action-oriented lists where chronological order is more practical.
+
 ## Comment 6 — Rebase
-**What conflicted:**
-**How I resolved it:**
-**How I verified no conflict remains:**
+**What conflicted:** The type definitions for `film_id` in the `WatchlistEntry` model conflicted due to the upstream shift from integers to UUIDs.
+**How I resolved it:** I fetched and rebased on `origin/main`. I updated `film_id` in `models.py` to be a `String(36)`. I also updated the docstrings in the service file and the fake ID in my tests to use UUID strings instead of integers.
+**How I verified no conflict remains:** I ran `pytest tests/ -v` to ensure all watchlist logic properly handles UUIDs and passes, and confirmed `git status` shows a clean working tree.
 
 ## PR Description
-<!-- Written at the end — feature overview, design decisions, manual testing steps -->
+**Feature Overview:** This PR adds a Watchlist feature allowing users to save films they want to watch later. It introduces a `WatchlistEntry` model, a service layer with deduplication logic, and REST endpoints to view and add to a user's watchlist. 
+**Design Decisions:** Watchlists default to public to encourage community engagement. The watchlist retrieval endpoint sorts films by "date added" (descending) rather than alphabetically, aligning with the primary user intent of finding recently saved movies.
+**Manual Testing Steps:**
+1. Run `python seed.py` and start the server (`flask run`).
+2. Send a POST request to `/watchlist/<demo_user_id>/add` with a JSON payload `{"film_id": "<uuid>"}`.
+3. Attempt to send the exact same POST request again to verify it returns an `AlreadyInWatchlistError`.
+4. Send a GET request to `/watchlist/<demo_user_id>` and verify the added film appears at the top of the list.
